@@ -5,28 +5,47 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidapp.data.Series
+import com.example.androidapp.databinding.SeriesItemLayoutBinding
 
-class SeriesAdapter(private val dataList: ArrayList<Series>,private val onItemClicked: (Series) -> Unit): RecyclerView.Adapter<SeriesAdapter.ViewHolder>() {
+class SeriesAdapter(private val onItemClicked: (Series) -> Unit):
+    ListAdapter<Series, SeriesAdapter.ViewHolder>(DiffCallback){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.series_item_layout,parent,false)
-        return  ViewHolder(itemView)
-    }
-
-    override fun getItemCount(): Int {
-        return dataList.size
+        return ViewHolder(
+            SeriesItemLayoutBinding.inflate(
+                LayoutInflater.from(
+                    parent.context
+                )
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = dataList[position]
-        holder.rvConstraintLayout.setOnClickListener{ onItemClicked(currentItem) }
-        holder.rvTitle.text=currentItem.title
+        val currentItem = getItem(position)
+        holder.itemView.setOnClickListener{ onItemClicked(currentItem) }
+        holder.bind(currentItem)
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var rvTitle:TextView = itemView.findViewById(R.id.title)
-        var rvConstraintLayout: ConstraintLayout = itemView.findViewById(R.id.holder)
+    class ViewHolder(private var binding: SeriesItemLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(series: Series)
+        {
+            binding.title.text=series.title
+        }
+    }
+
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Series>() {
+            override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {
+                return oldItem.title == newItem.title
+            }
+        }
     }
 }

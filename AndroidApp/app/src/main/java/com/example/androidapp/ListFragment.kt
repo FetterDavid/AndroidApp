@@ -17,7 +17,7 @@ import com.example.androidapp.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
     private val viewModel: SeriesViewModel by activityViewModels {
-        SeriesViewModelFactory((activity?.application as SeriesApplication).database.seriesDao())
+        SeriesViewModelFactory((activity?.application as SeriesApplication).repository)
     }
     private lateinit var recyclerView: RecyclerView
     private var _binding: FragmentListBinding? = null

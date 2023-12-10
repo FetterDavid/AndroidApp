@@ -15,8 +15,7 @@ import com.example.androidapp.databinding.FragmentAddBinding
 class AddFragment : Fragment() {
     private val viewModel: SeriesViewModel by activityViewModels {
         SeriesViewModelFactory(
-            (activity?.application as SeriesApplication).database
-                .seriesDao()
+            (activity?.application as SeriesApplication).repository
         )
     }
 

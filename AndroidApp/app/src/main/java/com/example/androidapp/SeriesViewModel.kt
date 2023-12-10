@@ -7,11 +7,12 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.androidapp.data.Series
 import com.example.androidapp.data.SeriesDao
+import com.example.androidapp.repository.SeriesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class SeriesViewModel(private val seriesDao: SeriesDao) : ViewModel() {
-    val dataList: LiveData<List<Series>> = seriesDao.getItems().asLiveData()
+class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
+    val dataList: LiveData<List<Series>> = repository.allSeries.asLiveData()
 
     fun addNewItem(seriesTitle: String) {
         val newItem = getNewItemEntry(seriesTitle)
@@ -20,7 +21,7 @@ class SeriesViewModel(private val seriesDao: SeriesDao) : ViewModel() {
 
     private fun insertItem(series: Series) {
         viewModelScope.launch {
-            seriesDao.upsertSeries(series)
+            repository.upsert(series)
         }
     }
 
@@ -29,25 +30,13 @@ class SeriesViewModel(private val seriesDao: SeriesDao) : ViewModel() {
             title = seriesTitle,
         )
     }
-
-    /*init{
-        var titleList = arrayOf(
-            "The Sopranos", "Breaking Bad", "The Wire", "Twin Peaks", "The Leftovers", "Game of Thrones", "Better Call Saul", "The Office", "Friends",
-            "The Sopranos", "Breaking Bad", "The Wire", "Twin Peaks", "The Leftovers", "Game of Thrones", "Better Call Saul", "The Office", "Friends")
-
-        dataList = arrayListOf<Series>()
-        for (i in titleList.indices){
-            val series = Series(title = titleList[i])
-            dataList.add(series)
-        }
-    }*/
 }
 
-class SeriesViewModelFactory(private val seriesDao: SeriesDao) : ViewModelProvider.Factory {
+class SeriesViewModelFactory(private val repository: SeriesRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SeriesViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SeriesViewModel(seriesDao) as T
+            return SeriesViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

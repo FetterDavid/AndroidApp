@@ -48,5 +48,10 @@ class ListFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
+
+        binding.floatingActionButton.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToAddFragment()
+            this.findNavController().navigate(action)
+        }
     }
 }

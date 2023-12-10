@@ -53,5 +53,10 @@ class ListFragment : Fragment() {
             val action = ListFragmentDirections.actionListFragmentToAddFragment()
             this.findNavController().navigate(action)
         }
+
+        binding.catCactBtn.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToCatFactFragment()
+            this.findNavController().navigate(action)
+        }
     }
 }

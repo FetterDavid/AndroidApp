@@ -1,23 +1,33 @@
 package com.example.androidapp
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.androidapp.data.CatFact
 import com.example.androidapp.data.Series
 import com.example.androidapp.repository.SeriesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     val dataList: LiveData<List<Series>> = repository.allSeries.asLiveData()
+    val myResponse: MutableLiveData<Response<CatFact>> = MutableLiveData()
 
     fun getItem(id: Int):Flow<Series> {
         return repository.getSeries(id)
     }
 
+    fun getCatFact(){
+        viewModelScope.launch {
+            val response = repository.getCatFact()
+            myResponse.value =response
+        }
+    }
 
     fun addNewItem(seriesTitle: String, numberOfSeasons: Int, numberOfEpisodesPerSeason: Int) {
         val newItem = getNewItemEntry(seriesTitle,numberOfSeasons,numberOfEpisodesPerSeason)

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_listFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_catFactFragment"
+            app:destination="@id/catFactFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -42,5 +45,14 @@
             android:name="series_id"
             app:argType="integer"
             android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/catFactFragment"
+        android:name="com.example.androidapp.CatFactFragment"
+        android:label="fragment_cat_fact"
+        tools:layout="@layout/fragment_cat_fact" >
+        <action
+            android:id="@+id/action_catFactFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
 </navigation>

@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.androidapp.databinding.FragmentDetailsBinding
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 

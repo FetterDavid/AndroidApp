@@ -25,6 +25,10 @@
         <action
             android:id="@+id/action_detailsFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="title" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"

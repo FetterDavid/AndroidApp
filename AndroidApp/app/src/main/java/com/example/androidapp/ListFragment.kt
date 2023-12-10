@@ -5,14 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.example.androidapp.databinding.ActivityMainBinding
-import com.example.androidapp.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
     private var seriesViewModel: SeriesViewModel = SeriesViewModel()
@@ -29,7 +25,15 @@ class ListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = SeriesAdapter(seriesViewModel.dataList)
+
+        val adapter = SeriesAdapter(seriesViewModel.dataList) {
+            val action =
+                ListFragmentDirections.actionListFragmentToDetailsFragment(it.title)
+            this.findNavController().navigate(action)
+        }
+
+        recyclerView.adapter = adapter
+
 
         return view
     }

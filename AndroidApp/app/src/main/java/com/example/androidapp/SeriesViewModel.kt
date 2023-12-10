@@ -1,11 +1,13 @@
 package com.example.androidapp
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.androidapp.data.Series
 
-class SeriesViewModel {
+class SeriesViewModel: ViewModel() {
     lateinit var dataList: ArrayList<Series>
 
-    constructor(){
+    init{
         var titleList = arrayOf(
             "The Sopranos", "Breaking Bad", "The Wire", "Twin Peaks", "The Leftovers", "Game of Thrones", "Better Call Saul", "The Office", "Friends",
             "The Sopranos", "Breaking Bad", "The Wire", "Twin Peaks", "The Leftovers", "Game of Thrones", "Better Call Saul", "The Office", "Friends")
@@ -16,5 +18,14 @@ class SeriesViewModel {
             dataList.add(series)
         }
     }
+}
 
+class SeriesViewModelFactory : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SeriesViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SeriesViewModel() as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

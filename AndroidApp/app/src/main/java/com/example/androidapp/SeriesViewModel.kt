@@ -7,13 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.androidapp.data.Series
-import com.example.androidapp.data.SeriesDao
 import com.example.androidapp.repository.SeriesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     val dataList: LiveData<List<Series>> = repository.allSeries.asLiveData()
+
+    fun getItem(id: Int):Flow<Series> {
+        return repository.getSeries(id)
+    }
+
 
     fun addNewItem(seriesTitle: String, numberOfSeasons: Int, numberOfEpisodesPerSeason: Int) {
         val newItem = getNewItemEntry(seriesTitle,numberOfSeasons,numberOfEpisodesPerSeason)

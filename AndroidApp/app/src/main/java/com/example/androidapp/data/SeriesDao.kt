@@ -1,5 +1,6 @@
 package com.example.androidapp.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -18,4 +19,7 @@ interface SeriesDao {
 
     @Query("SELECT * from series ORDER BY title ASC")
     fun getItems(): Flow<List<Series>>
+
+    @Query("SELECT * from series WHERE id = :id")
+    fun getItem(id: Int): Flow<Series>
 }

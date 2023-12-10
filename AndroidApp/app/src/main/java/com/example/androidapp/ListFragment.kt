@@ -37,7 +37,7 @@ class ListFragment : Fragment() {
 
         val adapter = SeriesAdapter() {
             val action =
-                ListFragmentDirections.actionListFragmentToDetailsFragment(it.title)
+                ListFragmentDirections.actionListFragmentToDetailsFragment(it.id)
             this.findNavController().navigate(action)
         }
 

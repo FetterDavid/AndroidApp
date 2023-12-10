@@ -42,7 +42,10 @@ class AddFragment : Fragment() {
     }
 
     private fun addNewItem() {
-        viewModel.addNewItem(binding.seriesTitle.text.toString())
+        viewModel.addNewItem(
+            this.binding.seriesTitle.text.toString(),
+            this.binding.seriesSeasons.text.toString().toInt(),
+            this.binding.seriesEpisodes.text.toString().toInt())
         val action = AddFragmentDirections.actionAddFragmentToListFragment()
         findNavController().navigate(action)
     }

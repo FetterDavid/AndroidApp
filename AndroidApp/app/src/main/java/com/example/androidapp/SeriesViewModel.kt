@@ -3,6 +3,7 @@ package com.example.androidapp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.androidapp.data.Series
@@ -14,8 +15,8 @@ import kotlinx.coroutines.launch
 class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     val dataList: LiveData<List<Series>> = repository.allSeries.asLiveData()
 
-    fun addNewItem(seriesTitle: String) {
-        val newItem = getNewItemEntry(seriesTitle)
+    fun addNewItem(seriesTitle: String, numberOfSeasons: Int, numberOfEpisodesPerSeason: Int) {
+        val newItem = getNewItemEntry(seriesTitle,numberOfSeasons,numberOfEpisodesPerSeason)
         insertItem(newItem)
     }
 
@@ -25,9 +26,13 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
         }
     }
 
-    private fun getNewItemEntry(seriesTitle: String): Series {
+    private fun getNewItemEntry(seriesTitle: String, numberOfSeasons: Int, numberOfEpisodesPerSeason: Int): Series {
         return Series(
             title = seriesTitle,
+            numberOfSeasons =  numberOfSeasons,
+            numberOfEpisodesPerSeason = numberOfEpisodesPerSeason,
+            currentSeasons = 0,
+            currentEpisode = 0
         )
     }
 }

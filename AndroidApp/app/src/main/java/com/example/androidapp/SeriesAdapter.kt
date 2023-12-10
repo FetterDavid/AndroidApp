@@ -34,6 +34,8 @@ class SeriesAdapter(private val onItemClicked: (Series) -> Unit):
         fun bind(series: Series)
         {
             binding.title.text=series.title
+            binding.season.text=series.numberOfSeasons.toString()
+            binding.episode.text=series.numberOfEpisodesPerSeason.toString()
         }
     }
 

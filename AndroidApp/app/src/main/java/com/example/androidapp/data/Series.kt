@@ -9,4 +9,8 @@ data class Series(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val title: String,
+    val numberOfSeasons : Int,
+    val numberOfEpisodesPerSeason: Int,
+    val currentSeasons : Int,
+    val currentEpisode: Int,
 )

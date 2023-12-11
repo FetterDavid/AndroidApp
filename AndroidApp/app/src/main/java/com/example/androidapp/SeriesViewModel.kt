@@ -17,9 +17,9 @@ import retrofit2.Response
 
 class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     val dataList: LiveData<List<Series>> = repository.allSeries.asLiveData()
-    val fact: MutableLiveData<Response<CatFact>> = MutableLiveData()
+    private val _fact: MutableLiveData<Response<CatFact>> = MutableLiveData()
 
-    val transformedFact: LiveData<String> = fact.map { response ->
+    val transformedFact: LiveData<String> = _fact.map { response ->
         if (response.isSuccessful && response.body() != null) {
             "„${response.body()!!.fact}”"
         } else {
@@ -34,7 +34,7 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     fun getCatFact(){
         viewModelScope.launch {
             val response = repository.getCatFact()
-            fact.value =response
+            _fact.value =response
         }
     }
 

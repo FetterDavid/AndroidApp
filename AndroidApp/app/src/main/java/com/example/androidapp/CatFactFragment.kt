@@ -31,16 +31,6 @@ class CatFactFragment : Fragment() {
             binding.catFact.text = fact
         })
 
-        //binding.catFact.text = viewModel.transformedFact.value
-        /*viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
-            if(response.isSuccessful) {
-                binding.catFact.text=response.body()?.fact
-            }
-            else{
-                binding.catFact.text= response.code().toString()
-            }
-        })*/
-
         return binding.root
     }
 }

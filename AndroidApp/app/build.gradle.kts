@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-kapt")
+    id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -54,17 +56,20 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    //Roomdatabase
     implementation("androidx.room:room-runtime:2.6.1") // Added this line
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
-
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-
+    //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
-
+    //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.6.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.5.0")
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 }

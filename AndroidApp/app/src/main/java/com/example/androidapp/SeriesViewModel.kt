@@ -61,14 +61,19 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
             numberOfSeasons =  numberOfSeasons,
             numberOfEpisodesPerSeason = numberOfEpisodesPerSeason,
             currentSeasons = 1,
-            currentEpisode = 1
+            currentEpisode = 1,
+            finished = false
         )
     }
 
     fun watchNextEpisonde(series: Series) {
         var updatedSeries:Series
-        if(series.numberOfSeasons==series.currentSeasons && series.numberOfEpisodesPerSeason==series.currentEpisode) return
-        if(series.numberOfEpisodesPerSeason==series.currentEpisode)
+        if(series.numberOfSeasons==series.currentSeasons && series.numberOfEpisodesPerSeason==series.currentEpisode)
+        {
+            if(series.finished) return
+            updatedSeries = series.copy(finished = true)
+        }
+        else if(series.numberOfEpisodesPerSeason==series.currentEpisode)
         {
             updatedSeries = series.copy(currentSeasons = series.currentSeasons + 1, currentEpisode = 1)
         }

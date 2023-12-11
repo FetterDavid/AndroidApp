@@ -17,7 +17,7 @@ interface SeriesDao {
     @Delete
     suspend fun deleteSeries(series: Series)
 
-    @Query("SELECT * from series ORDER BY title ASC")
+    @Query("SELECT * from series ORDER BY finished ASC")
     fun getItems(): Flow<List<Series>>
 
     @Query("SELECT * from series WHERE id = :id")

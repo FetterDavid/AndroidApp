@@ -37,6 +37,9 @@ class SeriesAdapter(private val onItemClicked: (Series) -> Unit,private val watc
             binding.title.text=series.title
             binding.season.text=series.getCurrentSeasonEpisodeFormat()
             binding.watchedBtn.setOnClickListener{watchNextEpisode(series)}
+
+            if(series.finished) binding.watchedBtn.visibility= View.GONE
+            else binding.watchedBtn.visibility= View.VISIBLE
         }
     }
 

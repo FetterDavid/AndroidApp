@@ -1,5 +1,6 @@
 package com.example.androidapp.data
 
+import android.content.IntentSender.OnFinished
 import android.icu.text.CaseMap.Title
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,7 +13,8 @@ data class Series(
     val numberOfSeasons : Int,
     val numberOfEpisodesPerSeason: Int,
     val currentSeasons : Int,
-    val currentEpisode: Int
+    val currentEpisode: Int,
+    val finished: Boolean
 )
 {
     fun getCurrentSeasonEpisodeFormat(): String {

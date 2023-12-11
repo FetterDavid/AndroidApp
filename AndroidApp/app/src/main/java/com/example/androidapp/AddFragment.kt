@@ -1,11 +1,11 @@
 package com.example.androidapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -42,12 +42,23 @@ class AddFragment : Fragment() {
     }
 
     private fun addNewItem() {
-        viewModel.addNewItem(
-            this.binding.seriesTitle.text.toString(),
-            this.binding.seriesSeasons.text.toString().toInt(),
-            this.binding.seriesEpisodes.text.toString().toInt())
-        val action = AddFragmentDirections.actionAddFragmentToListFragment()
-        findNavController().navigate(action)
+        if (isEntryValid()) {
+            viewModel.addNewItem(
+                this.binding.seriesTitle.text.toString(),
+                this.binding.seriesSeasons.text.toString().toInt(),
+                this.binding.seriesEpisodes.text.toString().toInt()
+            )
+            val action = AddFragmentDirections.actionAddFragmentToListFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun isEntryValid(): Boolean {
+        return viewModel.isEntryValid(
+            binding.seriesTitle.text.toString(),
+            binding.seriesSeasons.text.toString(),
+            binding.seriesEpisodes.text.toString(),
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

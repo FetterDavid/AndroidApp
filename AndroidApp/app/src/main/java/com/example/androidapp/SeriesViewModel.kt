@@ -55,6 +55,13 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
         }
     }
 
+    fun isEntryValid(title: String, seasons: String, episodes: String): Boolean {
+        if (title.isBlank() || seasons.isBlank() || episodes.isBlank()) {
+            return false
+        }
+        return true
+    }
+
     private fun getNewItemEntry(seriesTitle: String, numberOfSeasons: Int, numberOfEpisodesPerSeason: Int): Series {
         return Series(
             title = seriesTitle,

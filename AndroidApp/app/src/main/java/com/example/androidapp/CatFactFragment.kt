@@ -26,14 +26,20 @@ class CatFactFragment : Fragment() {
         _binding = FragmentCatFactBinding.inflate(inflater, container, false)
 
         viewModel.getCatFact()
-        viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
+
+        viewModel.transformedFact.observe(viewLifecycleOwner, Observer { fact ->
+            binding.catFact.text = fact
+        })
+
+        //binding.catFact.text = viewModel.transformedFact.value
+        /*viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
             if(response.isSuccessful) {
                 binding.catFact.text=response.body()?.fact
             }
             else{
                 binding.catFact.text= response.code().toString()
             }
-        })
+        })*/
 
         return binding.root
     }

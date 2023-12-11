@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.androidapp.data.CatFact
 import com.example.androidapp.data.Series
@@ -16,7 +17,15 @@ import retrofit2.Response
 
 class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     val dataList: LiveData<List<Series>> = repository.allSeries.asLiveData()
-    val myResponse: MutableLiveData<Response<CatFact>> = MutableLiveData()
+    val fact: MutableLiveData<Response<CatFact>> = MutableLiveData()
+
+    val transformedFact: LiveData<String> = fact.map { response ->
+        if (response.isSuccessful && response.body() != null) {
+            "„${response.body()!!.fact}”"
+        } else {
+            ""
+        }
+    }
 
     fun getItem(id: Int):Flow<Series> {
         return repository.getSeries(id)
@@ -25,7 +34,7 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
     fun getCatFact(){
         viewModelScope.launch {
             val response = repository.getCatFact()
-            myResponse.value =response
+            fact.value =response
         }
     }
 

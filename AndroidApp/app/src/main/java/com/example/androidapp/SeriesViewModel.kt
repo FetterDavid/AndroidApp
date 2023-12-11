@@ -40,10 +40,16 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
 
     fun addNewItem(seriesTitle: String, numberOfSeasons: Int, numberOfEpisodesPerSeason: Int) {
         val newItem = getNewItemEntry(seriesTitle,numberOfSeasons,numberOfEpisodesPerSeason)
-        insertItem(newItem)
+        upsertItem(newItem)
     }
 
-    private fun insertItem(series: Series) {
+    fun deleteItem(series: Series) {
+        viewModelScope.launch {
+            repository.delete(series)
+        }
+    }
+
+    private fun upsertItem(series: Series) {
         viewModelScope.launch {
             repository.upsert(series)
         }
@@ -54,9 +60,20 @@ class SeriesViewModel(private val repository: SeriesRepository) : ViewModel() {
             title = seriesTitle,
             numberOfSeasons =  numberOfSeasons,
             numberOfEpisodesPerSeason = numberOfEpisodesPerSeason,
-            currentSeasons = 0,
-            currentEpisode = 0
+            currentSeasons = 1,
+            currentEpisode = 1
         )
+    }
+
+    fun watchNextEpisonde(series: Series) {
+        var updatedSeries:Series
+        if(series.numberOfSeasons==series.currentSeasons && series.numberOfEpisodesPerSeason==series.currentEpisode) return
+        if(series.numberOfEpisodesPerSeason==series.currentEpisode)
+        {
+            updatedSeries = series.copy(currentSeasons = series.currentSeasons + 1, currentEpisode = 1)
+        }
+        else updatedSeries = series.copy(currentEpisode = series.currentEpisode + 1)
+        upsertItem(updatedSeries)
     }
 }
 

@@ -7,4 +7,10 @@
     <string name="number_of_seasons">Number of seasons</string>
     <string name="number_of_episodes_per_seasons">Number of episodes per seasons</string>
     <string name="cat_fact">Cat Fact</string>
+    <string name="watch_list">Watch List</string>
+    <string name="seasons">Seasons:</string>
+    <string name="episode_season">Episodes/Seasons:</string>
+    <string name="loading">Loading...</string>
+    <string name="next_episode">Next episode:</string>
+    <string name="delete">Delete</string>
 </resources>

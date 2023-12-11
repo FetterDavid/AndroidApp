@@ -12,5 +12,10 @@ data class Series(
     val numberOfSeasons : Int,
     val numberOfEpisodesPerSeason: Int,
     val currentSeasons : Int,
-    val currentEpisode: Int,
+    val currentEpisode: Int
 )
+{
+    fun getCurrentSeasonEpisodeFormat(): String {
+        return "S${currentSeasons.toString().padStart(2, '0')}E${currentEpisode.toString().padStart(2, '0')}"
+    }
+}

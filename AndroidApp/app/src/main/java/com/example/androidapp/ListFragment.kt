@@ -35,11 +35,11 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SeriesAdapter() {
-            val action =
-                ListFragmentDirections.actionListFragmentToDetailsFragment(it.id)
-            this.findNavController().navigate(action)
-        }
+        val adapter = SeriesAdapter(onItemClicked = {
+            val action = ListFragmentDirections.actionListFragmentToDetailsFragment(it.id)
+            this.findNavController().navigate(action) },
+            watchNextEpisode = {
+               viewModel.watchNextEpisonde(it)})
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.adapter = adapter

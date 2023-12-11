@@ -1,5 +1,6 @@
 package com.example.androidapp
 
+import android.app.ActionBar.LayoutParams
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidapp.data.Series
 import com.example.androidapp.databinding.SeriesItemLayoutBinding
 
-class SeriesAdapter(private val onItemClicked: (Series) -> Unit):
+class SeriesAdapter(private val onItemClicked: (Series) -> Unit,private val watchNextEpisode: (Series) -> Unit):
     ListAdapter<Series, SeriesAdapter.ViewHolder>(DiffCallback){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +21,7 @@ class SeriesAdapter(private val onItemClicked: (Series) -> Unit):
                 LayoutInflater.from(
                     parent.context
                 )
-            )
+            ),watchNextEpisode
         )
     }
 
@@ -30,12 +31,12 @@ class SeriesAdapter(private val onItemClicked: (Series) -> Unit):
         holder.bind(currentItem)
     }
 
-    class ViewHolder(private var binding: SeriesItemLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private var binding: SeriesItemLayoutBinding,private val watchNextEpisode: (Series) -> Unit): RecyclerView.ViewHolder(binding.root) {
         fun bind(series: Series)
         {
             binding.title.text=series.title
-            binding.season.text=series.numberOfSeasons.toString()
-            binding.episode.text=series.numberOfEpisodesPerSeason.toString()
+            binding.season.text=series.getCurrentSeasonEpisodeFormat()
+            binding.watchedBtn.setOnClickListener{watchNextEpisode(series)}
         }
     }
 

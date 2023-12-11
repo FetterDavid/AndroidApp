@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.androidapp.data.Series
 import com.example.androidapp.databinding.FragmentDetailsBinding
 import kotlinx.coroutines.launch
 
@@ -37,6 +39,13 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        binding.deleteBtn.setOnClickListener{deleteItem()}
+
         return binding.root
+    }
+
+    private fun deleteItem() {
+        viewModel.deleteItem(binding.series as Series)
+        findNavController().navigateUp()
     }
 }

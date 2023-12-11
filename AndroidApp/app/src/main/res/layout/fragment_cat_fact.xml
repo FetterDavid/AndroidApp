@@ -9,11 +9,11 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/cat_fact"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/hello_blank_fragment"
+        android:text="@string/loading"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
